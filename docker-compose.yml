@@ -1,0 +1,7 @@
+services:
+  wled-mqtt-translator:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+  
