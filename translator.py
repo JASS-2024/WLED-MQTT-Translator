@@ -12,7 +12,6 @@ TOPIC = "WLEDTranslator/48"
 
 
 mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
-seen_message = False
 
 def on_open(ws):
     mqtt_client.connect(BROKER_ADDRESS, BROKER_PORT, 60)
@@ -23,9 +22,6 @@ def on_close(ws):
     print("WebSocket connection closed")
 
 def forward_message(ws, message):
-    global seen_message
-    print(f"Received Message {datetime.utcnow().microsecond}")
-    last_message = True
     mqtt_client.publish(TOPIC, message)
 
 ws = websocket.WebSocketApp(WLED_WS_ADDRESS, on_message=forward_message, on_open=on_open, on_close=on_close)
