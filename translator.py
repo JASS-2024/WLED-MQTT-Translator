@@ -34,8 +34,7 @@ def forward_message(ws, message):
 def forward_from_ip(ip):
     ws = websocket.WebSocketApp(f"ws://{ip}/ws", on_message=forward_message, on_open=on_open, on_close=on_close)
     ws.mqtt_topic = BASE_TOPIC + ip.rsplit(".")[-1]
-    while True:
-        ws.run_forever()
+    ws.run_forever(reconnect=True)
 
 for ip in WLED_IP_ADDRESSES:
     t = threading.Thread(target=lambda :forward_from_ip(ip) )
